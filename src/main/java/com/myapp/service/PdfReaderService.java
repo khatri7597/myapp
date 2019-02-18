@@ -1,14 +1,22 @@
 package com.myapp.service;
 
+import java.util.List;
+
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.myapp.dao.FileDataRepository;
+import com.myapp.model.FileData;
 
 @Service
 public class PdfReaderService {
+	
+	@Autowired
+	private FileDataRepository fileDataRepository;
 
 	@SuppressWarnings("unchecked")
 	public JSONObject readFile(MultipartFile file) {
@@ -26,6 +34,16 @@ public class PdfReaderService {
 			e.printStackTrace();
 		}
 		return new JSONObject();
+	}
+	
+	public void saveData(List<String> contents) {
+		if(!contents.isEmpty()) {
+			for(String content : contents) {
+				FileData data = new FileData();
+				data.setContent(content);
+				fileDataRepository.save(data);
+			}
+		}
 	}
 
 }
