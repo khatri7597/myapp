@@ -10,11 +10,12 @@ public class CollectionImpl {
 	
 	public static void main(String[] args) {
 		
-		CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<String>();
+		List<String> list = new ArrayList<String>();
 		list.add("1231");
 		list.add("123");
 		list.add("123");
 		list.add("123");
+		list.stream();
 		
 		Iterator<String> it = list.iterator();
 		list.remove("1231");

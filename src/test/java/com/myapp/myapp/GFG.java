@@ -7,6 +7,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map; 
   
+class ThreadJoining extends Thread 
+{ 
+    @Override
+    public void run() 
+    { 
+        for (int i = 0; i < 2; i++) 
+        { 
+            try
+            { 
+                Thread.sleep(500); 
+                System.out.println("Current Thread: "
+                        + Thread.currentThread().getName()); 
+            } 
+  
+            catch(Exception ex) 
+            { 
+                System.out.println("Exception has" + 
+                                " been caught" + ex); 
+            } 
+            System.out.println(i); 
+        } 
+    } 
+} 
 public class GFG { 
   
     // function to sort hashmap by values 
@@ -19,7 +42,7 @@ public class GFG {
         // Sort the list         
         Collections.sort(list, new Comparator<Map.Entry<String, Integer>>(){
         	public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-        		return (o1.getValue().compareTo(o2.getValue()));
+        		return (o1.getKey().compareTo(o2.getKey()));
         	}
         });
           
@@ -35,21 +58,56 @@ public class GFG {
     public static void main(String[] args) 
     { 
   
-        HashMap<String, Integer> hm = new HashMap<String, Integer>(); 
+		/*
+		 * HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		 * 
+		 * // enter data into hashmap hm.put("Math", 98); hm.put("Data Structure", 85);
+		 * hm.put("Database", 91); hm.put("Java", 95); hm.put("Operating System", 79);
+		 * hm.put("Networking", 80); Map<String, Integer> hm1 = sortByValue(hm);
+		 * 
+		 * // print the sorted hashmap for (Map.Entry<String, Integer> en :
+		 * hm1.entrySet()) { System.out.println("Key = " + en.getKey() + ", Value = " +
+		 * en.getValue()); }
+		 */
+    	ThreadJoining t1 = new ThreadJoining(); 
+        ThreadJoining t2 = new ThreadJoining(); 
+        ThreadJoining t3 = new ThreadJoining(); 
   
-        // enter data into hashmap 
-        hm.put("Math", 98); 
-        hm.put("Data Structure", 85); 
-        hm.put("Database", 91); 
-        hm.put("Java", 95); 
-        hm.put("Operating System", 79); 
-        hm.put("Networking", 80); 
-        Map<String, Integer> hm1 = sortByValue(hm); 
+        // thread t1 starts 
+        t1.start(); 
   
-        // print the sorted hashmap 
-        for (Map.Entry<String, Integer> en : hm1.entrySet()) { 
-            System.out.println("Key = " + en.getKey() +  
-                          ", Value = " + en.getValue()); 
+        // starts second thread after when 
+        // first thread t1 has died. 
+        try
+        { 
+            System.out.println("Current Thread: "
+                  + Thread.currentThread().getName()); 
+            t1.join(); 
         } 
+  
+        catch(Exception ex) 
+        { 
+            System.out.println("Exception has " + 
+                                "been caught" + ex); 
+        } 
+  
+        // t2 starts 
+        t2.start(); 
+  
+        // starts t3 after when thread t2 has died. 
+        try
+        { 
+            System.out.println("Current Thread: "
+                 + Thread.currentThread().getName()); 
+            t2.join(); 
+        } 
+  
+        catch(Exception ex) 
+        { 
+            System.out.println("Exception has been" + 
+                                    " caught" + ex); 
+        } 
+  
+        t3.start();
     } 
 } 
