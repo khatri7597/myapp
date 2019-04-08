@@ -1,5 +1,4 @@
-package com.myapp.myapp;
-import java.util.Scanner; 
+package com.myapp.myapp;	
 public class threadexample 
 { 
     public static void main(String[] args) 
@@ -12,10 +11,11 @@ public class threadexample
         { 
             @Override
             public void run() 
-            { 
+            {
+
                 try
                 { 
-                    pc.produce(); 
+                    pc  .produce();
                 } 
                 catch(InterruptedException e) 
                 { 
@@ -42,7 +42,7 @@ public class threadexample
             } 
         }); 
         
-        Thread t3 = new Thread(new Runnable() {
+        /*Thread t3 = new Thread(new Runnable() {
         	public void run() {
         		try {
 					//wait();
@@ -55,12 +55,12 @@ public class threadexample
 				}
         		
         	}
-        });
+        });*/
   
         // Start both threads 
         t1.start(); 
         t2.start(); 
-        t3.start();
+        //t3.start();
   
         // t1 finishes before t2 
         t1.join(); 
